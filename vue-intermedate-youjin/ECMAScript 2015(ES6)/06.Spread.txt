@@ -1,0 +1,45 @@
+# Object Spread Operator (산개연산자. 뿌리는 연산자)
+ - ES6 지원
+ - 사용법 : ...
+ - 무엇을 뿌려?
+    - ... 안에 여러개의 속성이 있어. 그걸 다 뿌려서 집어 넣어
+
+let josh = {
+    field : 'web',
+    language: 'js'
+};
+
+let developer = {
+    nation:'korea',
+
+    //es5
+    field:josh.field,
+    language:josh.language
+    
+    //es6
+    ...josh //josh 안에 있는 변수들을 다 뿌림
+};
+console.log(developer);
+
+
+* Object Spread Operator 사용하는 이유
+ - 각각의 컴포넌트에 존재하는 computed 속성이 있음
+ - 기존에 computed 내에 속성이 존재하는 상태에서 helper 를 쓰고 싶으면 무조건 Spread Operator 사용해야 함,
+
+
+ let developer = {
+    nation:'korea',
+    ...josh
+ };
+ 
+ // josh object의 필드가 기존에 있던 nation 필드 와 같은 depth를 유지함.
+
+  let developer = {
+    nation:'korea',
+    josh
+ };
+
+ // josh object의 필드가 기존에 있던 nation 필드 와 같은 depth를 유지하지 않고
+ // josh object 자체가 들어가
+ 
+ - 위 둘의 차이 때문임. 알겠지 유진아?? 

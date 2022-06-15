@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p> {{ num }} </p>
+        <app-header v-on:pass="logText"></app-header>
+        <app-content v-on:plus="plusNum"></app-content>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        
+        var appHeader = {
+            template:'<button v-on:click="passEvent"> Click Me </button>',
+            methods:{
+                passEvent : function() {
+                   this.$emit('pass');
+                }
+            }
+        };
+
+        var appContent = {
+            template:'<button v-on:click="addNumber"> Add! </button>',
+            methods:{
+                addNumber: function() {
+                    this.$emit('plus');
+                }
+            }
+            
+        }
+
+        new Vue({
+            el:'#app',
+            components:{
+                'app-header': appHeader,
+                'app-content': appContent
+            },
+            methods: {
+                logText: function() {
+                    console.log('hi');
+                },
+                plusNum: function() {
+                    // this 는 객체를 바라봐 여기서는 Vue야
+                    // 
+                    this.num++;
+                    console.log(this.num);
+                }
+            },
+            data:{
+                num:10
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!--
+    <button v-on:click="addNumber"> Add! </button>
+    appContent의 template에 정의한 버튼을 누르면
+    addNumber 메소드를 실행시키고
+    addNumber 메소드는 plus라는 이벤트를 발생시킨다.
+
+    <app-content v-on:plus="plusNum"></app-content>
+    plus라는 이벤트는 해당하는 컴포넌트의 태그에 따라 발생하게 되면 
+    상위 컴포넌트 root의 plusNum이라는 메소드를 실행한다.
+ -->

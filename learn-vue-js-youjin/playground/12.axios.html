@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Axios</title>
+</head>
+<body>
+  <div id="app">
+    <button v-on:click="getData">get user</button>
+    <div>
+      {{ users }}
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        users: []
+      },
+      methods: {
+        getData: function() { 
+            // axios 에서도 사용하기 위해 현재 컨텍스트인 vue instance를 변수에 담음
+            // es6, 화살표 함수를 배우면 axios 안에서 this 사용법 을 알게됨
+            var vm = this;
+
+            axios.get('https://jsonplaceholder.typicode.com/users/')
+            .then(function(response) {
+                // response를 찍으면 통신에 대한 전반적인 정보 확인 가능
+                console.log(response.data);
+                // this.users = response.data; 를 안하는 이유
+                // axios로 비동기 처리하며 실행 컨텍스트가 바뀌면서 
+                // 이 내부에 있는 this는 더이상 vue instance를 가르키지 않음
+                // https://joshua1988.github.io/web-development/translation/javascript/how-js-works-inside-engine/
+                vm.users = response.data;
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
+      }
+    })
+  </script>
+</body>
+</html>

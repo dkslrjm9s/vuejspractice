@@ -1,0 +1,10 @@
+network 패널 왔을때
+데이터 통신만 보려면
+xhr 봐
+xhr 이 비동기, 데이터 통신
+
+알아두어야 할 http protocol
+https://joshua1988.github.io/web-development/http-part1/
+
+크롬 개발자 도구
+https://developer.chrome.com/docs/devtools/

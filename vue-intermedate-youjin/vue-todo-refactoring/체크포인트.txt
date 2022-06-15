@@ -1,0 +1,54 @@
+
+강의. 현재 앱 구조의 문제점 진단 및 개선된 앱 구조 소개
+# 데이터 추가/삭제가 일어났을때 화면이 반영이 안됨
+- input에서 데이터를 추가해면  list component 에 반영이 안됨
+- footer에서 데이터 삭제하면 list component 에 반영이 안됨
+
+-> 개선 : TodoInput, TodoList, TodoFooter 등 하위 컴포넌트는 표현만.
+          실질적인 데이터 관리/조작은 root(App.vue) 에서 할거임. (props/event emit 이용)
+
+ * App 은 좀 더 컨테이너 라는 개념으로 보면 됨.
+ 컴포넌트 설계시,
+ 컨테이너 컴포넌트 : 비지니스 로직(앱의 동작, 조작) 설계
+ 프레젠터 컴포넌트 : 단순하게 화면 설계
+ 가 있음
+
+ * vue x 관점 : 
+  전체적으로 컨테이너에서 사용할 데이터를 한군데로 몸. 
+  그리고 그 한군데에서 데이터 조작이 일어남.
+
+
+
+강의. 모달 컴포넌트 등록
+오류 창 등 작은 창을 띄움
+https://v2.vuejs.org/v2/examples/modal.html
+위 페이지에서 많은 샘플들 확인 가능
+
+# Vue 에서는 트랜지션, 에니메이션 효과 등을 코어에서 라이브러리로 제공하고 있음
+
+# x-template :
+일반적인 웹(javs, jquery 등) 개발 시에는 템플릿을 모듈화 하려면
+x-template 을 쓸 수 있음
+
+vue 인스턴스 내에 template 속성에서도 id를 쓸 수 있음
+template:'#idname' 하면 vue instance가 사용된 위치에 해당하는 아이디의 html 돔이 삽입됨
+
+common > Modal.vue
+TodoInput.vue 소스 참고
+
+강의. 트랜지션 소개 및 구현
+tag, name 설정 후 아래 class를 사용
+https://vuejs.org/guide/built-ins/transition.html#transition
+(v는 transition name이 들어감)
+(위 페이지의 그림보면서 이해해봐)
+v-enter : 처음 effect가 시작되었을때의 상태 (대상이 없었다가)
+v-enter-to : effect가 끝났을때의 상태 (대상이 있어진다)
+v-enter-avtive : 트랜지션 지속되는 상태
+
+v-leave : 처음 effect가 시작되었을때의 상태 (대상이 있었다가)
+v-leave-to : effect가 끝났을때의 상태 (대상이 없어진다)
+v-leave-avtive : 트랜지션 지속되는 상태
+
+https://vuejs.org/guide/built-ins/transition-group.html > list effect 관련
+TodoList.vue 참조
+

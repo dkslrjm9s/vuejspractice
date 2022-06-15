@@ -1,0 +1,14 @@
+# 뷰라우터
+- 뷰에서 싱글페이지 어플리케이션, 페이지간 이동 기능을 구현할때 사용하는 라이브러리
+https://router.vuejs.org/guide/
+
+뷰라우터 js cdn주소
+<script src="https://unpkg.com/vue-router@4.0.5/dist/vue-router.global.js"></script>
+
++ vue 라이브러리도 필요, 라우터 cdn만 쓰면 안됨
+
+
+router.html 참고
+
+# 네비게이션 가드 참고 자료
+https://joshua1988.github.io/web-development/vuejs/vue-router-navigation-guards/

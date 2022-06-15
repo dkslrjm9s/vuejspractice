@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- router-link
+        router 가 가지고 있는 태그
+        url에 따라 나타나는 화면도 중요하지만 화면에서의 다른 화면으로의 연결도 중요
+        최종적으로 화면에 anker tag(ex) <a>) 로 변환되서 나타남
+        라우터에서 페이지 이동을하기 위한 이동 태그라고 보자
+        -->
+        <div>
+            <router-link to="/login">Login</router-link>
+            <router-link to="/main">Main</router-link>
+        </div>
+
+        <!-- router-view
+        router 가 가지고 있는 태그
+        페이지 url이 이동/변경됬을때, 그 url에 따라서 뿌려지는 영역
+        vue instance에 router instance 를 연결해야지만 사용할 수 있는 태그
+        
+        도메인/login or 도메인/main 이동시 라우터에 지정한 component들이 
+        router-view 태그내에서
+        anoymous component로 뜨는 것을 확인 할 수 있음
+        후반부에 배우는 vue cli 로 싱글 파일 컴포넌트를 이용하면 정확한 이름도 나와
+        -->
+        <router-view></router-view>
+
+
+    </div>
+
+    <!-- cdn 기입 순서도 중요. 먼저 vue.js/ 그다음 router.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
+    <script>
+
+        var LoginComponent = {
+            template: ' <div>Login</div>'
+        };
+
+        var MainComponent = {
+            template: ' <div>Main</div>'
+        };
+        // vue router를 vue instance에 동작시키자.(연결)
+        //vue router instance
+        var router = new VueRouter({
+            mode:'history', //url에 붙는 # 가 없어짐
+
+            // router의 정보를 하나씩 추가해보자.
+            
+            // routes:페이지의 라우팅 정보
+            // 어떤 url을 입력했을때 어떤 페이지가 뿌려질 것인가를 정함
+            routes:[
+                // 로그인 페이지 정보
+                {
+                    // 페이지의 url
+                    path:'/login',
+                    // 해당 url에서 표시될 컴포넌트
+                    // components가 아님을 주의 해당 url 마다 뿌려질 component는 하나
+                    component: LoginComponent
+                },
+
+                // 메인 페이지 정보
+                {
+                    path:'/main',
+                    component: MainComponent
+                }
+            ]
+        });
+
+        //vue instance
+        new Vue({
+            el:'#app',
+            //vue내부에서 정의한 생성자? : 우리가 위에서 선언한 router instance 객체
+            //router가 제대로 주입되면 vue 개발자 도구에서 확인 가능함
+            router: router
+        });
+
+    </script>
+</body>
+</html>

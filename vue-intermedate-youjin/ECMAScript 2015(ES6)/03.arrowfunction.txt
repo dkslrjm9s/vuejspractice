@@ -1,0 +1,45 @@
+# 화살표 함수(Arrow Function,fat arrow)
+ - 함수정의시 function 을 사용하지 않고 => 로 대체 함
+    - function 쓰기 귀찮으니까(간소화)
+    - vue에서는 :function 을 생략할 수 있음
+    - 일반 ecmascript 에서는 function 인것 같음.
+    
+ - 콜백함수에서 scope 가 좀 달라지면서 문법 간결화
+    - 콜백 함수 안에 들어가는 함수는 scope 가 다름.
+      global scope를 가져서 윈도우 객체를 바라보는 경우가 많음.
+
+      ex) ajax, axios
+            -> 호출 하는 객체의 속성안에 scope가 다른 부분들을 
+                중간에 매개변수를 써서 scope를 연결하기도함 (이걸 화살표 함수로 편하게)
+
+예시1)
+// ES5
+var sum = function(a,b) {
+    return a + b;
+}
+
+// ES6
+// 인자가 하나일 경우 () 쓰지 않아도 됨
+var sum = (a,b) => {
+    return a + b;
+}
+
+예시2)
+// ES5
+var arr = ["a","b","c"];
+
+arr.forEach(function(value) {
+    console.log(value);
+})
+
+
+// ES6
+var arr = ["a","b","c"];
+arr.forEach(value=>console.log(value));
+
+
+https://babeljs.io/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.21&spec=false&loose=false&code_lz=Q&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=true&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.17.11&externalPlugins=&assumptions=%7B%7D
+
+저기서 실습 ㄱㄱ
+
+

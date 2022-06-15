@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- {{}} 안에 props 속성변수명 이나 data 속성 변수명 기재 -->
+        {{str}}
+        <app-header v-bind:propsdata="num"></app-header>
+        <!-- 암묵적으로 pass 이벤트로 부터 전달받은 10을 deliverNum의 인자로 전달 -->
+        <app-content v-on:pass="deliverNum"></app-content>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        var appHeader = {
+            template:'<div>Header</div>',
+            props:['propsdata']
+        }
+
+        var appContent = {
+            template:'<div>Content<button v-on:click="passNum">pass</button></div>',
+            methods:{
+                passNum: function() {
+                    this.$emit('pass',10); // 10을 전달
+                }
+            }
+        }
+
+        new Vue({
+            el:'#app',
+            data:{
+                str:'hi',
+                num: 0
+            },
+            components:{
+                'app-header':appHeader,
+                'app-content':appContent
+            },
+            methods:{
+                // pass 이벤트로 받은 10이 value에 받아짐
+                deliverNum:function(value) {
+                    this.num = value;
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

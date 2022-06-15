@@ -1,0 +1,206 @@
+# vuex 기술 요소
+ - state : 여러 컴포넌트에 공용되는 데이터 data 속성과 유사
+ - getters : 연산된 state 값을 접근하는 속성 computed 속성과 유사
+ - mutations : * state 값을 변경 * 하는 이벤트 로직 method 속성과 유사
+ - actions : 비동기 처리 로직을 선언하는 method ex) aysnc 
+
+# state 란?
+ // vue
+ data : {
+     message:'Hello'
+ }
+
+ //vuex
+ satae : {
+     message:'Hello'
+ }
+
+ => data 와 사용이 동일함, 단 여러 컴포넌트 사이에서 공유 된다는 점만 다름
+
+<!-- Vue -->
+<p> {{ message }} </p>
+
+<!-- VueX -->
+<p> {{ this.$store.state.message }}</p>
+
+=> template 에서 접근 하는 방법이 조금 다름
+    this.$store 라고 접근을 하게 되는데 
+    main.js 에 Vue.use(Vuex) 를 global functionality로 추가해주었기 때문에 이런식으로 접근 가능
+
+
+# getters 란?
+ - state 를 접근하는 속성, computed 처럼 미리 연산된 값을 접근하는 속성
+ - this.$store.state.message 이런 식으로 매번 접근 하기 귀찮으니까
+
+ // store.js
+ state : {
+     num:10
+ },
+ getters : {
+     getNumber(state) {
+         return state.nuum;
+     },
+     doubleNumber(state) {
+         return state.num*2;
+     }
+ }
+
+ // template
+ <p> {{ this.$store.getters.getNumber }}</p>
+ <p> {{ this.$store.getters.doubleNumber }}</p>
+
+=> this.$store.state.message 이거랑 뭐가 다른가 싶겠지만
+    뒤에 나오는 helper 함수를 쓰게 되면 바로 축약이 됨.
+
+
+# mutations 란?
+ - satae 값을 변경할 수 있는 유일한 방법, method
+
+ // store.js
+ state : {
+     num:10
+ },
+ mutations : {
+     printNumbers(state) {
+         return state.num
+     },
+     sumNumbers(state, anotherNum) {
+         return state.num + anotherNum
+     }
+ }
+
+ // App.vue
+ this.$store.commit('printNumbers'); // 10
+ this.$store.commit('sumNumbers',20); // 30
+
+ => 특징1: 항상 첫번째 인자로 state를 가지고 옴. (vuex규약)
+ => 특징2: commit 으로 동작 시킴(첫번째 인자인 satate 를 제외하고 인자 붙임)
+
+ => state 값을 변경시킨당
+
+ - commit() 형식
+ // store.js
+ state : {
+     storeNum:10
+ },
+ mutations : {
+     modifyState(state, payload) {
+         console.log(payload.str);
+         return state.storeNum += payload.num;
+     }
+ }
+
+ // App.vue
+ this.$store.commit('modifyState', {
+     str: 'passed from payload',
+     num: 20
+ }); // 30
+
+ => 객체도 넘길 수 있음
+ => 통상적으로 payload 라는 변수명으로 인자를 씀
+
+
+- 왜 state를 직접 변경하지 않고 mutations 로 변경할까?
+    - satae는 여러개의 컴포넌트에서 공유하고 있기 때문에 특정 컴포넌트에서 변경이 일어날시 추적해야 함.
+        > 그렇지 않으면 어느 시점에 어느 컴포넌트에서 state 를 변경했는지 알기 어려움.
+        > mutations 을 이용하면 뷰 개발자 도구에서 어느 시점에 state가 변했는지 추적 가능
+    - mutations을 거치지 않으면 뷰의 반응성을 얻기 어렵다. (vue 개발을 그렇게 해놈)
+        - 반응성 : 화면의 데이터가 변경될을때 스크립트(vuejs) 에서 바로 인지함.
+
+
+
+# actions 란?
+ - 비동기 처리 로직을 선언하는 메서드, 비동기 로직을 담당하는 mutations
+ - 비동기 : 특정 요청을 보냈을때 기다려주는거@
+    ex) promise, es6 aysnc
+    https://joshua1988.github.io/web-development/javascript/promise-for-beginners/
+    https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/
+
+
+// 간단한 예시
+ // store.js
+ state : {
+     num:10
+ },
+ mutations : {
+     doubleNumber(state) {
+        state.num * 2
+     }
+ }
+,
+actions : {
+    delayDoubleNumber(context) {
+        // 비동기 로직 사용 가능
+        // ... 이부분에
+
+        context.commit('doubleNumber);
+    }
+}
+
+// App.vue
+this.$store.dispatch('delayDoubleNumber);
+
+=> context : actions에서 mutation 을 접근할 수 있고, 접근하기 위한 경로라고 보면 됨.
+   context.commit 은 mutation의 commit과 동일한 역할을함
+   actions 을 컴포넌트 단에서 호출할때는 dispatch를 사용이
+
+// 실제 비동기 코드 예시1
+ // store.js
+ mutations: {
+     addCounter(state) {
+         state.conter++
+     },
+ },
+ actions: {
+     delayedAddCounter(context) {
+         setTimeout(() => context.commit('addCounter'), 2000);
+     }
+ }
+
+ // App.vue
+ method: {
+     incrementCounter() {
+         this.$store.dispatch('delayedAddCounter');
+     }
+ }
+
+ => setTimeout 예시
+    2초 마다 카운터 증가
+
+// 실제 비동기 코드 예시2
+ // store.js
+ mutations: {
+     setData(state, fetchedData) {
+         state.product = fetchedData;
+     },
+ },
+ actions: {
+     fetchProductData(context) {
+         return axios.get('https://domain.com/products/1)
+                     .then(response => context.commit('setData', response));
+     }
+ }
+
+ // App.vue
+ method: {
+     getProduct() {
+         this.$store.dispatch('fetchProductData');
+     }
+ }
+
+=> axios 예시
+    서버에서 데이터 받아와서 mutation 에 넘겨줌 mutation은 state에 서버에서 가져온 값을 할당함
+
+
+
+- 비동기 처리 로직은 왜 actions에서 써야 할까?
+    - state는 직접 변경하지 않고 mutation을 거쳐야 할까와 연장선상에 있음
+    - 특정 컴포넌트에서 mutation 을 호출한다고 했을때 어떤 컴포넌트에서 언제 할지 모르니까 확인하기 어렵다
+      그래서 규격화 한거야
+      actions 에서는 비동기만 하고 mutation 에서는 동기만 하자
+      그리고 비동기가 끝나면 무조건 mutation으로 들고와서 mutation 에서 state 접근하자
+
+    - 여러컴포넌트에서 시간차를 두고 mutation에서 state를 변경하는 경우 state 값의 변화를 추적하기 어렵기 때문에
+      mutation 은 동기만 넣는다. 그리고 비동기(여러컴포넌트 시간차) 는 state를 건드리지 말자
+
+      

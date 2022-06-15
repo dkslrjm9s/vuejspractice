@@ -1,0 +1,62 @@
+# vuex 가 필요한 이유.
+
+최하단 컴포넌트가 본인이 상속되지 않은 다른 상위 컴포넌트에 데이터를 전달 하려면
+수많은 props와 emit이 발생함
+=> 이거 관리 힘들어
+
+# 이벤트 버스
+ : 어디서 이벤트를 보냈는지, 어디서 받았는지 알기 어려움
+ : 컴포넌트간 데이터 전달이 명시적이지 않음
+
+
+1. MCV 패턴에서 발생하는 구조적 오류
+2. 컴포넌트 간 데이터 전달 명시
+    : 개발자 도구로 확인하는 법 알려줄게
+3. 여러개의 컴포넌트에서 같은 데이터를 업데이트 할때 동기화 문제(mutaion, actions)
+
+
+
+# vuex 컨셉
+ - 단방향
+ - View => Action => State (=> View => Action ...)
+    - State : 컴포넌트간 공유하는 데이터 ex) data()
+    - View : 데이터 표시하는 화면 ex) template
+    - Action : 사용자 입력에 따라 데이터를 변경 ex) methods (데이터 변경 or 이벤트로직 발생)
+
+
+# vuex 구조
+- state : data property
+- getters : computed (data의 변동을 즉각 체크. 1강 15,16,17번 소스 )
+- mutations : method
+- actions : 비동기 method
+
+ - 컴포넌트 => 비동기 로직(Actions) => 동기 로직(Mutations) => 상태
+
+    - 비동기 로직(Actions) : setTimeOut, 서버에서 api call 등
+                            Actions 는 위와 같은 비동기 로직만 처리하지 데이터를 바꾸진 않음
+                            자기 로직 한 후 데이터를 바꿀 수 있는 mutations 를 call 함.
+    - 동기 로직(Mutations) : 비동기 로직의 call 로 데이터 처리
+
+
+
+* 비동기와 동기의 차이
+https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/
+
+
+* javascript promise
+https://joshua1988.github.io/web-development/javascript/promise-for-beginners/
+
+
+
+
+** vuex 예시를 따라 치다보면 
+state를 사용하면 영향을 받는 컴포넌트들도 많아지면서 부담스러워 질 것 같기도  한데 어떤 상황에서 사용하는게 좋을지 궁금합니다.
+
+
+ state를 언제 사용해야 하는지에 대한 판단은 컴포넌트 간에 데이터를 어떤 식으로 주고 받을 거냐 하는 관점에서 결정하시면 좋을 것 같습니다 :)
+
+사례를 하나 살펴보면, 컴포넌트 깊이가 1depth(부모 - 자식)인 경우에는 굳이 스토어를 통해서 데이터를 전달하실 필요는 없습니다. 스토어를 거치치 않고도 props와 event emit으로 충분히 전달할 수 있기 때문입니다 :) 반대로 컴포넌트의 깊이가 깊거나 컴포넌트 간의 거리가 먼 경우에는 데이터 전달을 props와 event emit으로 했을 때 중개해주는 코드가 너무 많이 발생하고 데이터 전달도 쉽지 않은데요. 이런 경우에는 스토어를 이용해서 같은 데이터(state)를 변경하고 접근하는 것이 편합니다.
+
+state를 사용했을 때 여러 컴포넌트에 영향을 주는 것이 부담스러우시다고 하셨는데요. 해당 문제는 꼭 필요한 곳에서만 스토어를 사용하시면서 남용하는 걸 줄이면 해결될 수 있는 문제 같습니다 :) 아래 질문을 항상 염두에 두고 스토어의 로직을 구현하시면 좋을 것 같습니다.
+
+state를 사용하지 않고도 data 속성으로 해결될 수 있는 문제인가?

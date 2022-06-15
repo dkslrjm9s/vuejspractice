@@ -1,0 +1,86 @@
+<!-- 뷰 컴포넌트 
+컴포넌트 : 화면의 영역을 영역별로 코드로 관리하는 것. head, side 등등
+사용하는 이유 ? 코드의 재사용성. 반복을 최대한 줄이는 것.
+영역을 구분하면서 컴포넌트간의 관계가 생김(컴포넌트 내 컴포넌트)-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 아래에서 정의한 app-header 컴포넌트의 컴포넌트 태그.
+        Vue instance의 el 속성으로 app 이 지정되었기에 사용 가능.
+        컴포넌트의 내용의 반영되어 화면에 나타나게됨. -->
+        <app-header></app-header>
+        <app-content></app-content>
+        <app-footer></app-footer>
+    </div>
+        
+    <div id="app2">
+        <app-header></app-header>
+        <app-content></app-content>
+        <app-footer></app-footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        // 전역 컴포넌트로 등록
+        // 실제 서비스에서는 거의 사용할 일이 없음.
+        // 컴포넌트를 등록하는 가장 간단 한 방법. 
+        // 사용법
+        // Vue.component('컴포넌트 이름/태그', {
+        //     컴포넌트 내용
+        // });
+
+        Vue.component('app-header', {
+            template:'<h1>Header</h1>' // template 속성이용하여 tag 생성
+        });
+
+        Vue.component('app-content', {
+            template:'<div>Content</div>'
+        });
+
+        // => 위의 app-header와 app-content 는 생성 후 자동으로 root 컴포넌트의 하위 컴포넌트가 된다.
+        // 인스턴스를 생성하면 기본적으로 root 컴포넌트가 된다.
+        new Vue({
+            el: '#app',
+            // 지역 컴포넌트 등록
+            // 전역보다 훨씬 많이 사용됨.
+            // 사용법(s가 붙는다!! why? 여러개가 들어갈거니까)
+            // components:{
+            //     '컴포넌트 이름/태그':컴포넌트 내용
+            // }
+            components:{
+                'app-footer':{
+                    template:'<footer>Footer</footer>'
+                }
+            }
+        });
+
+
+        // 전역 vs 지역 컴포넌트
+        // 전역 : 플로그인이나 라이브러리 처럼 전역으로 사용하는 것만 함
+        // 지역 : 지금은 안보이지만 나중에 컴포넌트 기반형식으로 개발해서 싱글 파일 컴포넌트 체계로 갔을때 특정 컴포넌트 하단에 어떤 컴포넌트가 들어갔는지 컴포넌트 속성에서 바로 알 수가 있음
+        //       서비스에서는 보기 편함
+
+        // 컴포넌트와 인스턴스의 관계
+        // 다중의 인스턴스와 컴포넌트가 있을때
+        // 전역은 컴포넌트는 app2 태그에서 바로 사용가능하나 지역은 그럴수 없다.
+        // 지역 컴포넌트 : 인스턴스를 생성할때마다 등록해야 함 -> 전역은 그렇지 않아도 된다.
+        new Vue({
+            el:'#app2',
+            components:{
+                'app-footer':{
+                    template:'<footer>Footer</footer>'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

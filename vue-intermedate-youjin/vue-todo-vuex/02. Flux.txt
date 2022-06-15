@@ -1,0 +1,33 @@
+# flux와 MVC 패턴 소개 및 Flux 등장 배경
+
+# Flux란?
+ - MVC 패턴의 복잡한 데이터 흐름 문제를 해결하기 위한 개발 패턴
+ - MVC 문제점 :
+    - 한개의 view 가 바뀌었을때 다른 view 에서 데이터 추적이 어려움
+
+ - unidirectional data flow(flux) : data 흐름이 한 방향으로만 움직임(단방향)
+   
+   action => dispatcher => model => view => action ...
+
+   - action : 화면에서 발생하는 이벤트, 사용자 입력
+   - dispatcher : action 으로 인해 움직이고 딱하나만 함. model을 바뀌기 위한 역할
+                  데이터 변경 방법, 메서드
+   - Model(store) : 우리가 아는 모델. 화면에 표시할 데이터
+   - View : 사용자 화면
+
+ * MVC 패턴 (양뱡향)
+    controller => Model <=> view
+
+    view : 사용자가 보는 화면
+    Model : 화면에 보이는 text, 이미지 데이터 들(만약에 DB에서 가져왔다면)
+    controller : model 과 view 제어
+
+ * mvc 패턴의 문제점
+                          <=> view
+                => Model  <=> view
+   controller   => Model  <=> view
+                => Model  <=> view
+
+    위와 같이 복잡하면 기능 추가, 변경 하는 문제점 예측 불가
+
+

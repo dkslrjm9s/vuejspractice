@@ -1,0 +1,87 @@
+<!-- 
+    vue 의 데이터 바인딩 방법
+    1. mustache {{}}
+    2. vue 디렉티브 : v- 가 붙는 특수한 속성
+       => 단지 화면에서 표현되는 text 뿐만이 아니라 전체적인 dom에 대한 정보들도
+          reactive 하게 바뀔 수 있다. 이게 vue의 역할
+        v- 가 태그 에 붙으면 vue instance 의 data는 conputed 속성을 vue는 뒤짐
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- mustache -->
+        <p> {{ num }} </p>
+        <p> {{ doubleNum }} </p>
+
+        <!-- vue 디렉티브 -->
+        <!-- vue 내부 로직에 따라 id 값을 바꾸고 싶을 때
+            : v-bind:id
+            : data 속성의 uuid 참고 
+            
+            즉, v-bind를  html 표준 속성(id, class..) 앞에 붙이고 속성명을 명시하면
+            vue instance 에서 해당하는 값이 연결됨
+        -->
+        <p v-bind:id="uuid" v-bind:class="name"> {{ num }} </p>
+        <p v-bind:class="name"> {{ doubleNum }} </p>
+        
+
+        <!-- 
+            조건에 따라 특정 태그를 보여주느냐 마느냐
+            로그인이 진행중이면 loding... / 로그인 완료면 아래를 보여주고 싶어
+            : v-if / v-else 사용
+         -->
+        <div v-if="loading">
+            Loding...
+        </div>
+        <div v-else>
+            test user has been logged in
+        </div>
+
+        <!-- 
+            v-if vs v-show
+            v-if : 결과 dom에서 완전히 tag를 제거함
+            v-show : css style 에서 display none 으로 육안상으로만 보이지 않게 하고 돔에 태그는 남김
+         -->
+        <div v-show="loading">
+            Loding...
+        </div>
+
+        <!-- 인풋 박스를 마들고 입력된 값을 P 태그에 출력 -->
+        <input v-model="message"></input>
+        <p>
+            Message is {{message}}
+        </p>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        new Vue({
+            el:'#app',
+            data:{
+                str:'hi',
+                num:'10',
+                uuid:'abc1234',
+                name:'text-blue',
+                loading: true,
+                message:''
+            },
+            // 데이터의 속성을 정의 할때, 다른 데이터에 따라 값이 바뀌면 computed 속성을 정의 할 수 있게 된다.
+            computed:{
+                doubleNum: function(){
+                    return this.num * 2
+                }
+            }
+        });
+    </script>
+</body>
+</html>

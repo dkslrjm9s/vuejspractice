@@ -1,0 +1,84 @@
+<!-- reactivity 방식을 이용한 웹 개발 -->
+<!-- reactivity : vue의 핵심. 한글로 반응성. 데이터의 변화를 라이브러리에서 감지해서 알아서 화면에 자동으로 그려주는 것 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+    <script>
+        var div = document.querySelector('#app');
+        var viewModel = {};
+
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+        // 아래 api는 위 사이트에서 자세한 설명 들을 수 있음
+        // 객체의 동작을 재정의 하는 api
+        // 우리가 변수를 선언하고 마음대로 할당 할 수 있는 것처럼  Object를 재정의 하게 해줌
+
+        //*** 주의할점 defineProperty 임!! defineProperties 아님!!
+        // => 사용법
+        // Object.defineProperty(대상객체, 객체의 속성, {
+        //     정의 할 내용
+        // }); 
+        
+        // 소스 시작 아래 주석 해제
+        // Object.defineProperty(viewModel, 'str', {
+        //     // 속성에 접근했을 때의 동작을 정의
+        //     get: function() {
+        //         console.log('접근');
+        //     },
+        //     // 속성에 값을 할당했을 때의 동작을 정의, newValue : 새로 할당된 값
+        //     set: function(newValue) {
+        //         console.log('할당', newValue);
+
+        //         // 개발자도구 console 창에서 값을 바뀔때마다 div 내 text가 바뀜
+        //         // 즉 viewModel.str 이 바뀔때마다 div text 가 바뀜
+        //         // data binding
+        //         div.innerHTML = newValue; 
+        //     }
+        // });
+
+
+        // 위에서 배운 내용을 라이브러리화 하겠다.
+
+        // 즉시실행함수
+        // https://developer.mozilla.org/ko/docs/Glossary/IIFE
+
+        // 역할 : 즉시실행함수 내부에 들어오는 함수들이 application logic에 노출 되지 않게 또다른 유효범위에 넣어주는것 
+        // (function() {
+        // })();
+
+        (function() {
+            function init() {
+                Object.defineProperty(viewModel, 'str', {
+                // 속성에 접근했을 때의 동작을 정의
+                    get: function() {
+                        console.log('접근');
+                    },
+                    // 속성에 값을 할당했을 때의 동작을 정의, newValue : 새로 할당된 값
+                    set: function(newValue) {
+                        console.log('할당', newValue);
+                        render(newValue);
+                        
+                    }
+                });
+            }
+
+            function render(value) {
+                div.innerHTML = value; 
+            }
+
+            //함수 호출
+            init();
+        })();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+# vue cli
+https://cli.vuejs.org/
+get started -> installation
+
+터미널 :
+node -v : 10점대 이상
+npm -v : 6점대 버전 이상
+npm install -g @vue/cli : vue cli 설치
+
+
+# cli : commend line interface
+명령어를 통한 특정 액션을 수행하는 도구
+명령어 보조.실행도구
+
+
+# 
+[Vue CLI 2.X]
+vue init '프로젝트 템플릿 유형' '프로젝트 폴더 위치'
+vue init webpack-simple '프로젝트 폴더 위치'
+
+[Vue CLI 3.X]
+vue create '프로젝트 폴더 위치'
+
+# 서버 실행
+cd 파일위치
+npm run serve
+
+npm : node package manage
+ - packag.json 에서 dependecies, devDependencies 등에 명시된 라이브러리 로드
+                    정의 된 명령어 실행
+ - npm run "명령어" 는 실은 package.json 의 script 에 있는 정의된 명령어를 실행하는 것
+
+
+# vue cli 프로젝트 설명
+- npm run serve를 통해 실행되는 것은 어떤 것인가?
+    public > index.html
+             <!-- built files will be auto injected --> : 빌드된 파일이 자동으로 이부분에 추가 될것이다.
+             -> src 폴더 내에 생성된 main.js / App.vue 등의 파일의 내용이 자동으로 하나의 파일/ 최소환의 내용으로 로 변환 되어
+                index.html 에 주입된다.
+    * 이게 web-pack 때문에 되는 거야. 나중에 꼭 학습 해봐
+    

@@ -1,0 +1,20 @@
+# Vuex - 상태 관리 라이브러리
+ - 정의 : 무수히 많은 컴포넌트의 데이터를 관리하기 위한 상태 관리 패턴이자 라이브러리
+ - 복잡한 app, 컴포넌트를 효율적으로 관리하는 라이브러리
+ - 라이브러리 이면서 상태관리패턴
+ - vuex를 왜쓸까?
+    - 컴포넌트들이 정말 많아 졌을때 우리가 관리할 수 있는 방법이 무엇일까?
+    - react -> flux 패턴으로 컴포넌트들이 무수히 많아졌을때 야기 되는 문제점을 해결 하고 있었음
+    - 이 flux 패턴을 vuex에 그대로 도입
+    - vue 의 reactivity + flux 가 공존 할 수 있는 방향으로 vuex 만듬
+ - vuex의 주요 속성인 state, getters, mutations, actions 
+    - 위의 생소한 문장을 우리가 이제까지 배웎던 익숙한 문장으로 바꿔보자
+    - state : data property
+    - getters : computed (data의 변동을 즉각 체크. 1강 15,16,17번 소스 )
+    - mutations : method
+    - actions : 비동기 method
+ - vuex를 더 쉽게 코딩 할 수 있는 helper
+ - vuex로 프로젝트 구조화, 모듈화
+ - store 라고도 많이 말함
+ 
+

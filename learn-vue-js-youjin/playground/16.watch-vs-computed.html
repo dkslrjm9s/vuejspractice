@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{ num }}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                num:10
+            },
+            computed:{
+                // data 속성중 num을 계속해서 2배하는 함수
+                // 호출하지 않아도 vue 내부적으로 계속 계산
+                // 데이터의 의존성을 가짐. 
+                // 이 로직이 실행될때 기본적으로 기준이 되는 값이 data 속성중 num
+                // 빠른 계산, 캐싱
+                // 단순 계산
+                doubleNum:function() {
+                    return this.num *2;
+                }
+            },
+            watch: {
+                // num이 바뀌었을때 특정 로직을 실행한다는 점에서 computed와 비슷
+                // 하지만 단순계산보다 조금더 무거운 로직
+                // 매번 실행되는게 부담스러운 로직을 실행
+                // 아래와 같은 num 값에 따라 새로운 데이터를 불러옴
+                // watch는 기본적으로 두개의 인자를 받음
+                // newValue와 oldValue
+                // newVlaue : 갱신된 값
+                // oldValue : 갱신 이전 값
+                // 데이터 요청에 적합하다(axios get)
+                num: function(newValue, oldValue) {
+                    this.fetchUserByNumber(newValue);
+                }
+            },
+            methods :{
+                fetchUserByNumber: function(num) {
+                    console.log(num);
+                    axios.get(num); // 임시코드
+                }
+            }
+        });
+    </script>
+</body>
+</html>

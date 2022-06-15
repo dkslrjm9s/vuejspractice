@@ -1,0 +1,64 @@
+<!-- instance -> 뷰 개발시 필수 생성 코드이자 단위
+    생성방법 : new Vue(); -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+
+    <!-- Vue.js Script 가져옴. 공식사이트에서도 가져올 수 있음 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+
+            // element(요소) 지정
+            // 지정시 body 내에서 app이라고하는 id를 가진 tag를 찾아서 지금 이 instance를 붙이겠다.
+            // 그러면 vue instance가 붙은 tag 안에서는 vue의 기능과 속성들이 유효하다
+            // 즉 아래 예시에서는 id가 app인 div태그안에서 vue 기능과 속성을 사용할 수 있다.
+            // 인스턴스를 정의 하면 개발자도구의 vue dev tool 에서도 확인이 가능하다.
+            el:'#app',
+            data:{
+                message:'hi'
+            }
+        });
+
+
+        // 인스턴스를 왜 사용하는가?
+        // 생성자를 통해서 이야기 해보자
+
+        // 기본 자바스크립트 생성자 (함수생성시 함수명의 첫번째글자가 대문자면 생성자로 인식함)
+        // function Person(name, job) {
+        //     this.name = name;
+        //     this.job = job;
+        // }
+        // var p = new Person('josh', 'developer');
+
+        // vue의 instance는 생성자 함수 처럼 기존에 정의되어있는 함수와 속성이 있어 우리는 그냥 선언해서 가져다 쓰면 된다.
+
+        
+        // vue instance의 기본적인 속성
+        //https://joshua1988.github.io/vue-camp/vue/instance.html#%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5%E1%86%AB%E1%84%89%E1%85%B3%E1%84%8B%E1%85%B4-%E1%84%89%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A5%E1%86%BC-api%E1%84%83%E1%85%B3%E1%86%AF
+        // object를 하나 만들어서 인스턴스 생성의 파라미터로 쓸수도 있지만 왠만하면 그냥 아래 처럼 쓰자
+        var vm2 = new Vue({
+            el : '#app',
+            data : {
+                message:'hi2'
+            },
+            methods:{
+
+            },
+            created: function() {
+
+            }
+        });
+    </script>
+</body>
+</html>

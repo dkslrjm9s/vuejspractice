@@ -1,0 +1,7 @@
+# SingleFileCOmponent
+
+C:\Users\82103\OneDrive\문서\GitHub\learn-vue-js-youjin\vue-cli\scr > a.vue 소스 참고
+
+HTML, JavaScript, CSS를 한 파일에서 관리하겠다.
+
+* 따로 tmeplate 속성을 사용하지 않고 template 태그를 사용함

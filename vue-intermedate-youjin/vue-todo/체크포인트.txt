@@ -1,0 +1,20 @@
+강의. TodoInput 컴포넌트의 할 일 저장 기능 구현
+main.js 에서 vue instance 생성 후  App.vue로 정의
+-> App.vue에서 components 정의
+-> 결국 모든 컴포넌트들은 main.js 의 vue 인스턴스(root) 에 등록되 어 있다.
+
+TodoInput component 에서 this는 TodoInput component 를 가리킨다.
+
+
+강의. TodoList 컴포넌트의 할 일 목록 표시 기능 구현
+# Vue Life Cycle
+
+기본 : Vue instance 생성 > mounted > update > destroy
+before creade 등등 해서 열개정도 있음
+
+created는 instance가 생성 되자 마자 호출 life cycle 훅
+
+훅 : 생성되는 시점에 훅 안에 로직이 한번 실행
+
+
+

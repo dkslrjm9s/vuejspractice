@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p> {{ num }} </p>
+        <app-content v-on:plus="plusNum"></app-content>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        
+        var appContent = {
+            template:'<button v-on:click="addNumber"> Add! </button>',
+            methods:{
+                addNumber: function() {
+                    this.$emit('plus');
+                }
+            }
+            
+        }
+
+        // 일반적인 자바 스크립트에서 this 의 사용
+        // 아래 처럼 사용했을때 getNumber는 본인이 포함된 오브젝트 obj를 바라보게됨
+        var obj = {
+            num:10,
+            getNumber:function() {
+                console.log(this.num);
+            }
+        };
+
+        // Vue에서의 this
+        // 일반적인 사용처럼 생각하면 num 변수는 한 뎁스 위에 있어야 this를 아래처럼 사용할 수 있어
+        // 하지만 대충 vue 라는 객체를 바라본다는건 이해될거야
+        // vue 에서는
+        // method의 속성인 함수는 this를 사용했을때 data 의 속성으로 선언된 변수들을 바라봐
+        // 개발자 도구로 vm을 찍어보면 num 변수가 밖으로 나와있는 걸 볼 수 있어
+        // vue는 이걸 내부적으로 되게 해줘
+        var vm = new Vue({
+            el:'#app',
+            components:{
+                'app-content': appContent
+            },
+            methods: {
+                logText: function() {
+                    console.log('hi');
+                },
+                plusNum: function() {
+                    this.num++;
+                    console.log(this.num);
+                }
+            },
+            data:{
+                num:10
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!-- this의 네가지 용법
+https://www.w3schools.com/js/js_this.asp -->

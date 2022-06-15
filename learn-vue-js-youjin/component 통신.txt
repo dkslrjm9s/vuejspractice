@@ -1,0 +1,59 @@
+# 컴포넌트 통신 방식
+https://joshua1988.github.io/vue-camp/vue/components-communication.html
+
+컴포넌트를 등록하면 관계가 생긴다.
+- 큰영역 안에 작은 영역
+ex) root -> appHeader -> NavigationBar
+-> 규칙이 생긴다!
+
+> 컴포넌트 통신 규칙
+등록된 각각의 컴포넌트는 각자 데이터를 관리하는데 그 데이터를 서로 공유하기 위한 방법으로 
+props 속성과 event 속성을 사용한다
+
+상위 -> 하위 데이터 전달 : props
+하위 -> 상위 데이터 전달 : event
+
+
+# 컴포넌트 통신 규칙이 왜 필요한가?
+
+ex)
+root -> appHeader -> NavigationBar
+     -> appContent -> LoginForm
+     -> appFooter -> CompanyInfo
+
+위와 같이 컴포넌트들이 등록되어 있을때, 
+appHeader 에서 사용자 로그인 하여 -> LoginForm -> appFooter -> NavigationBar
+같이 데이터가 전달 되었다고 하자
+
+-> 특정 컴포넌트의 변화에 따라서 나머지 컴포넌트들이 유기적으로 데이터를 주고 받았을때, 
+데이터의 방향을 예측하기 어려워..(코딩시에)
+그로인해 나타난 버그 잡기도 어려워.(mvc 통신에서도 문제가 많이 있었)
+
+
+그런데 컴포넌트 통신 규칙이 적용되면
+데이터가 아래로만 내려가(props) (props 라는 속성에 data를 넣을거야)
+그리고 아래에서 위로는 data를 올리는 게 아니라 이벤트가 올라가(대화하기)
+
+
+# 같은 레벨의 경우 통신은 어떻게 할까?
+root -> 인스턴스 의미
+같은 레벨의 컴포넌트는 어떻게 데이터를 전달?
+playground -> component-same-level.html 소스 참고
+
+만약 appcontent -> appheader를 등록하고자 한다면,
+appcontent -event-> root -props-> appheader 로 진행
+event emit을 사용하려면,
+appcontent 내부에 click 이벤트가 발생했을때 메소드 속성내의 함수를 하나 호출하여
+root에 이벤트를 발생시키게 한다.
+
+root에서는 appcontent로 부터 전달받은 데이터를 저장할 data속성을 하나 생성한다.
+더하여 appcontent의 이벤트를 받을 methods 속성도 하나 생성한다.
+생성된 methods 속성은 암묵적으로 인자로 넘어온 데이터를 생성된 data 속성의 변수에 넣는다.
+
+
+appheader에 root로 부터 받을 props 속성을 선언하고 컴포넌트 태그에 v-vind 한다.
+v-vind:프롭스속성이름="상위컴포넌트의데이터이름"
+
+
+appcontent - event - > root - props -> appheader
+              10       num:10           propsdata:10

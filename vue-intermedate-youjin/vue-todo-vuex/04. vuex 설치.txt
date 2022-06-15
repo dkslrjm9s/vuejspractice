@@ -1,0 +1,22 @@
+# vuex 설치
+
+es5
+
+es6 
+- 이걸로 설치 할거야
+- vue 코딩시 es6가 더 편해
+
+npm install vuex@"vuex버전" --save
+
+npm install vuex@3.6.2 --save
+
+
+
+# 파일 위치
+
+scr > components > store > store.js
+
+
+* npm installer로 설치한게 package.json 에 등록 되고 그게 node_modules 밑에 라이브러리로 잡힘(설치됨)
+  소스에서 import 하면 해당 라이브러리를 사용할 수 있음
+  

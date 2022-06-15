@@ -1,0 +1,54 @@
+# 배경(ES5)
+ - 모듈화 방법 없음. 
+ - 모듈 로더 라이브(AMD, Commons JS) 기능을 가져다 씀
+
+ - Module : 특정 기능을 수행하는 한 단위(덩어리, 묶음)
+
+
+
+# 모듈화를 사용하는 이유
+ - 재사용성이 뛰어난 기능을 묶어서(Module) 필요할때마다 가져다 쓸거다. : 모듈화
+ - 변수 scope 충돌 등 변수 유효범위에 대한 안정성 측면에서 사용.
+ - 라이브러리로 사용했던 부분들을 좀 더 언어 차원에서 지원하며 개발자 수고 덜어짐.
+
+
+
+#Modules : Import와 Export
+
+
+# Export : 해당하는 함수와 변수의 scope가 다른 것들과 달라짐
+    ex) // libs/math.js
+        export function sum(x,y) {
+            retufn x + y;
+        }
+        export var pi = 3.141593;
+
+# Import : import 시 export 가 실행됨
+    ex) // main.js 
+        import {sum} from 'libs/math.js';
+        sum(1,2);
+
+# App.vue / TodoInput.vue 참고
+
+
+# Vue.js 에서 마주칠 default export
+vue에서의 scaffolding : ?
+
+default는 한개의 파일에서 하나만 export 됨.
+ : 다른 것들이 쓸데 없이 import 될 수 있지 않게 함?,encapsulation
+
+ - 익명으로 export 하게 되면 가져다 쓰는 입장에서 이름을 다양하게 부여해서 사용할 수 있음
+   같은 파일을 export 하더라도 다양하게 이름 붙여서 쓸 수 있다.
+    ex)
+        // util.js
+        export default function(x) {
+            return console.log(x);
+        }
+
+        // main.js
+        import util from 'util.js';
+        util('hi');
+
+        // app.js
+        import log from 'util.js';
+        log('hi');
